@@ -1,0 +1,25 @@
+#!/bin/sh
+
+DIR="${1}"
+
+if [[ -d "${DIR}" ]]; then
+    IMG=$(wget -q -O - 'http://www.nasa.gov/rss/lg_image_of_the_day.rss' | grep -o '<enclosure [^>]*>' | grep -o 'http://[^\"]*')
+
+    if [[ -n ${IMG} ]]; then
+        if [[ -f "${DIR}/bg-9.jpg" ]]; then
+            echo rm -f "${DIR}/bg-9.jpg"
+            rm -f "${DIR}/bg-9.jpg"
+        fi
+
+        for ((n=8; n>=0; n--)); do
+            if [[ -f "${DIR}/bg-${n}.jpg" ]]; then
+                echo mv "${DIR}/bg-${n}.jpg" "${DIR}/bg-$((n+1)).jpg"
+                mv "${DIR}/bg-${n}.jpg" "${DIR}/bg-$((n+1)).jpg"
+            fi
+        done
+
+        wget -q -O "${DIR}/bg-0.jpg" "${IMG}"
+
+        awsetbg -u xsetbg "${DIR}/bg-0.jpg"
+    fi
+fi
