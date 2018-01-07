@@ -54,6 +54,7 @@ autorunApps = {
 runOnceApps = { 
     "gnome-settings-daemon",
     "blueman-applet",
+    "nm-applet",
     "ibus-daemon",
     "xcompmgr",
     -- For Android Studio - mimic an old tiling manager, since the Sun JVM can't render tiles properly.
